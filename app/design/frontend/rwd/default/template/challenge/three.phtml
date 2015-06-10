@@ -1,0 +1,28 @@
+<?php
+$products = $products = Mage::getModel('catalog/product')->getCollection()->addAttributeToSelect('*');
+
+#echo $products->getSelect();
+foreach($products as $product):?>
+
+<p>
+<table>
+    <tr>
+        <td>
+            <img src="<?php echo $this->helper('catalog/image')->init($product, 'image')->resize(300, 300);?>" />
+        </td>
+        <td>
+            <?php echo $product->getName();?><br><br>
+            <?php echo '$'.$product->getPrice();?>
+    <?php if($product->isSaleable()): ?>
+        <button type="button" title="<?php echo $this->__('Add to Cart') ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($product) ?>')"><span><span><?php echo $this->__('Add to Cart') ?></span></span></button>
+    <?php else: ?>
+        <p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+    <?php endif; ?>
+    </td>
+</tr>
+</table>
+</p>
+<br>
+<br>
+
+<?php endforeach;?>
